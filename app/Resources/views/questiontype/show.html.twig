@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>QuestionType</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ questionType.id }}</td>
+            </tr>
+            <tr>
+                <th>Available</th>
+                <td>{% if questionType.available %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Boolean</th>
+                <td>{% if questionType.boolean %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Explanation</th>
+                <td>{{ questionType.explanation }}</td>
+            </tr>
+            <tr>
+                <th>Externalsource</th>
+                <td>{% if questionType.externalsource %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ questionType.name }}</td>
+            </tr>
+            <tr>
+                <th>Multiplechoice</th>
+                <td>{% if questionType.multiplechoice %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Oneoption</th>
+                <td>{% if questionType.oneoption %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Shortanswer</th>
+                <td>{% if questionType.shortanswer %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if questionType.createdat %}{{ questionType.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_questiontype_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('config_questiontype_edit', { 'id': questionType.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

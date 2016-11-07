@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ActivityType</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ activityType.id }}</td>
+            </tr>
+            <tr>
+                <th>Available</th>
+                <td>{% if activityType.available %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ activityType.name }}</td>
+            </tr>
+            <tr>
+                <th>Explanation</th>
+                <td>{{ activityType.explanation }}</td>
+            </tr>
+            <tr>
+                <th>Race</th>
+                <td>{% if activityType.race %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Quiz</th>
+                <td>{% if activityType.quiz %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Poll</th>
+                <td>{% if activityType.poll %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_activitytype_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('config_activitytype_edit', { 'id': activityType.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

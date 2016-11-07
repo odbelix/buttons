@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ClassroomReport list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Report</th>
+                <th>Classroom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classroomReport in classroomReports %}
+            <tr>
+                <td><a href="{{ path('classroomreport_show', { 'id': classroomReport.id }) }}">{{ classroomReport.id }}</a></td>
+                <td>{{ classroomReport.reporttype }}</td>
+                <td>{{ classroomReport.classroom }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('classroomreport_show', { 'id': classroomReport.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('classroomreport_edit', { 'id': classroomReport.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('classroomreport_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

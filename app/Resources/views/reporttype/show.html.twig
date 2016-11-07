@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ReportType</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reportType.id }}</td>
+            </tr>
+            <tr>
+                <th>Available</th>
+                <td>{% if reportType.available %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ reportType.name }}</td>
+            </tr>
+            <tr>
+                <th>Explanation</th>
+                <td>{{ reportType.explanation }}</td>
+            </tr>
+            <tr>
+                <th>Daily</th>
+                <td>{% if reportType.daily %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Weekly</th>
+                <td>{% if reportType.weekly %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Monthly</th>
+                <td>{% if reportType.monthly %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_reporttype_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('config_reporttype_edit', { 'id': reportType.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

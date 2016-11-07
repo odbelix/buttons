@@ -1,0 +1,15 @@
+{
+    "dir": "db/exports",
+    "export": "doctrine2-annotation",
+    "params": {
+        "addGeneratorInfoAsComment": false,
+        "backupExistingFile": false,
+        "indentation": 4,
+        "logFile": "db/export.log",
+        "skipPluralNameChecking": false,
+        "bundleNamespace": "CoreBundle",
+        "entityNamespace": "Entity",
+        "repositoryNamespace": "CoreBundle\\Entity",
+        "useAutomaticRepository": false
+    }
+}
