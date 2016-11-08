@@ -33,6 +33,7 @@ class SessionController extends Controller
         ));
     }
 
+
     /**
      * Creates a new Session entity.
      *

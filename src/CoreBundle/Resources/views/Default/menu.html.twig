@@ -1,0 +1,15 @@
+<ul>
+  <li><a href="{{path('core_default_index')}}">Home</a></li>
+  {% if is_granted('ROLE_DEVELOPER') %}
+    <li><a href="{{path('config_questiontype_index')}}">questiontype</a></li>
+    <li><a href="{{path('config_activitytype_index')}}">activitytype</a></li>
+    <li><a href="{{path('config_reporttype_index')}}">reporttype</a></li>
+  {% endif %}
+  {% if is_granted('ROLE_TEACHER') %}
+    <li><a href="{{path('classroom_index')}}">classroom</a></li>
+  {% endif %}
+  {% if is_granted('ROLE_STUDENT') %}
+    <li><a href="{{path('classroom_index')}}">classroom</a></li>
+  {% endif %}
+    <li><a href="javascript:history.back()">Volver</a></li>
+</ul>

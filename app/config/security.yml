@@ -47,7 +47,8 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         ## For the API
         - { path: ^/api, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, role: ROLE_STUDENT }            
+        - { path: ^/, role: ROLE_STUDENT }
+        - { path: ^/config, role: ROLE_DEVELOPER }            
             # activate different ways to authenticate
 
             # http_basic: ~

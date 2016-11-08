@@ -1,36 +1,30 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Classroom list</h1>
-
+{% extends 'CoreBundle:Default:base.html.twig' %}
+{% block content %}
+    <h1>Lista de Salas</h1>
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Created_at</th>
-                <th>Lastchange</th>
-                <th>User_id</th>
-                <th>Actions</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Fecha de creación</th>
+                <th>Ultima actualización</th>
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
         {% for classroom in classrooms %}
             <tr>
-                <td><a href="{{ path('classroom_show', { 'id': classroom.id }) }}">{{ classroom.id }}</a></td>
                 <td>{{ classroom.code }}</td>
                 <td>{{ classroom.name }}</td>
                 <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ classroom.userid }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('classroom_show', { 'id': classroom.id }) }}">show</a>
+                            <a href="{{ path('classroom_show', { 'id': classroom.id }) }}">Ver</a>
                         </li>
                         <li>
-                            <a href="{{ path('classroom_edit', { 'id': classroom.id }) }}">edit</a>
+                            <a href="{{ path('classroom_edit', { 'id': classroom.id }) }}">Editar</a>
                         </li>
                     </ul>
                 </td>
@@ -41,7 +35,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('classroom_new') }}">Create a new entry</a>
+            <a href="{{ path('classroom_new') }}">Crear una nueva Sala</a>
         </li>
     </ul>
 {% endblock %}

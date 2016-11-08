@@ -7,8 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use CoreBundle\Entity\Classroom;
+use CoreBundle\Entity\Session;
+use CoreBundle\Entity\Question;
 use CoreBundle\Entity\User;
 use CoreBundle\Form\ClassroomType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Classroom controller.
@@ -27,7 +30,7 @@ class ClassroomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $classrooms = $em->getRepository('CoreBundle:Classroom')->findAll();
+        $classrooms = $em->getRepository('CoreBundle:Classroom')->findBy(array('user_id' => $this->getUser()->getId()));
 
         return $this->render('classroom/index.html.twig', array(
             'classrooms' => $classrooms,
@@ -52,9 +55,9 @@ class ClassroomController extends Controller
             $em = $this->getDoctrine()->getManager();
             $classroom->setCreatedAt(new \DateTime("now"));
 
-            $user = new User();
-            $user->setId(1);
-            $classroom->setUserId(1);
+            $user = $this->getUser();
+            $classroom->setUser($user);
+
             $em->persist($classroom);
             $em->flush();
 
@@ -82,6 +85,53 @@ class ClassroomController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    /**
+     * Finds and displays a Classroom entity.
+     *
+     * @Route("/home/{id}", name="classroom_home")
+     * @Method({"GET","POST"})
+     */
+    public function homeAction(Request $request,Classroom $classroom)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $this->validateUserClassroom($classroom);
+        $session = $em->getRepository('CoreBundle:Session')->findOneBy(array('finished_at' => null));
+
+        $sessionform = $this->createFormBuilder()
+            ->setAction($this->generateUrl('classroom_home', array('id' => $classroom->getId())))
+            ->setMethod('POST')
+            ->add('classroom_id', HiddenType::class, array(
+                'data' => $classroom->getId()
+              ))
+            ->getForm()
+        ;
+
+        $sessionform->handleRequest($request);
+
+        if ($sessionform->isSubmitted() && $sessionform->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $session = new Session();
+            $data = $sessionform->getData();
+            $session->setClassroom($classroom);
+            $session->setCreatedAt(new \DateTime("now"));
+            $em->persist($session);
+            $em->flush();
+
+            //GO TO SESSION HOME PAGE
+            return $this->redirectToRoute('active_index', array('id' => $session->getId()));
+        }
+
+        return $this->render('classroom/classroom.html.twig', array(
+            'sessionform' => $sessionform->createView(),
+            'session' => $session,
+            'classroom' => $classroom,
+        ));
+    }
+
+
+
+
 
     /**
      * Displays a form to edit an existing Classroom entity.
@@ -146,4 +196,15 @@ class ClassroomController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Validation of User
+     *
+     */
+     private function validateUserClassroom($classroom){
+          if ( $this->getUser()->getId() != $classroom->getUserId() ){
+              throw $this->createNotFoundException('La Sala seleccionada pertenece a otro usuario');
+          }
+     }
+
 }

@@ -4,6 +4,7 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CoreBundle\Entity\Classroom
@@ -22,11 +23,13 @@ class Classroom
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\NotBlank(message = "Debes indicar un codigo para su identificacion")
      */
     protected $code;
 
     /**
      * @ORM\Column(name="`name`", type="string", length=200)
+     * @Assert\NotBlank(message = "Debes indicar un nombre")
      */
     protected $name;
 
@@ -52,16 +55,16 @@ class Classroom
     protected $classroomActivities;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassroomQuestion", mappedBy="classroom")
-     * @ORM\JoinColumn(name="id", referencedColumnName="classroom_id", nullable=false)
-     */
-    protected $classroomQuestions;
-
-    /**
      * @ORM\OneToMany(targetEntity="ClassroomReport", mappedBy="classroom")
      * @ORM\JoinColumn(name="id", referencedColumnName="classroom_id", nullable=false)
      */
     protected $classroomReports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="classroom")
+     * @ORM\JoinColumn(name="id", referencedColumnName="classroom_id", nullable=false)
+     */
+    protected $enrollments;
 
     /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="classroom")
@@ -84,8 +87,8 @@ class Classroom
     public function __construct()
     {
         $this->classroomActivities = new ArrayCollection();
-        $this->classroomQuestions = new ArrayCollection();
         $this->classroomReports = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
         $this->groups = new ArrayCollection();
         $this->sessions = new ArrayCollection();
     }
@@ -265,42 +268,6 @@ class Classroom
     }
 
     /**
-     * Add ClassroomQuestion entity to collection (one to many).
-     *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
-     * @return \CoreBundle\Entity\Classroom
-     */
-    public function addClassroomQuestion(ClassroomQuestion $classroomQuestion)
-    {
-        $this->classroomQuestions[] = $classroomQuestion;
-
-        return $this;
-    }
-
-    /**
-     * Remove ClassroomQuestion entity from collection (one to many).
-     *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
-     * @return \CoreBundle\Entity\Classroom
-     */
-    public function removeClassroomQuestion(ClassroomQuestion $classroomQuestion)
-    {
-        $this->classroomQuestions->removeElement($classroomQuestion);
-
-        return $this;
-    }
-
-    /**
-     * Get ClassroomQuestion entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClassroomQuestions()
-    {
-        return $this->classroomQuestions;
-    }
-
-    /**
      * Add ClassroomReport entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\ClassroomReport $classroomReport
@@ -334,6 +301,42 @@ class Classroom
     public function getClassroomReports()
     {
         return $this->classroomReports;
+    }
+
+    /**
+     * Add Enrollment entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Enrollment $enrollment
+     * @return \CoreBundle\Entity\Classroom
+     */
+    public function addEnrollment(Enrollment $enrollment)
+    {
+        $this->enrollments[] = $enrollment;
+
+        return $this;
+    }
+
+    /**
+     * Remove Enrollment entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Enrollment $enrollment
+     * @return \CoreBundle\Entity\Classroom
+     */
+    public function removeEnrollment(Enrollment $enrollment)
+    {
+        $this->enrollments->removeElement($enrollment);
+
+        return $this;
+    }
+
+    /**
+     * Get Enrollment entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnrollments()
+    {
+        return $this->enrollments;
     }
 
     /**

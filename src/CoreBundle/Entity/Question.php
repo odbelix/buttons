@@ -9,15 +9,26 @@ use Doctrine\Common\Collections\ArrayCollection;
  * CoreBundle\Entity\Question
  *
  * @ORM\Entity()
- * @ORM\Table(name="question", indexes={@ORM\Index(name="fk_question_question_type1_idx", columns={"question_type_id"})})
+ * @ORM\Table(name="question", indexes={@ORM\Index(name="fk_question_question_type1_idx", columns={"question_type_id"}), @ORM\Index(name="fk_question_session1_idx", columns={"session_id"})})
  */
 class Question
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $session_id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $question_type_id;
 
     /**
      * @ORM\Column(type="string", length=500)
@@ -35,19 +46,9 @@ class Question
     protected $suggestion;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $question_type_id;
-
-    /**
      * @ORM\Column(type="date")
      */
     protected $created_at;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    protected $created_by;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -60,16 +61,15 @@ class Question
     protected $showresults;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $available;
+
+    /**
      * @ORM\OneToMany(targetEntity="ActivityQuestion", mappedBy="question")
      * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
      */
     protected $activityQuestions;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ClassroomQuestion", mappedBy="question")
-     * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
-     */
-    protected $classroomQuestions;
 
     /**
      * @ORM\OneToMany(targetEntity="Option", mappedBy="question")
@@ -90,6 +90,12 @@ class Question
     protected $resultUsers;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Session", inversedBy="questions")
+     * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
+     */
+    protected $session;
+
+    /**
      * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
      * @ORM\JoinColumn(name="question_type_id", referencedColumnName="id", nullable=false)
      */
@@ -98,7 +104,6 @@ class Question
     public function __construct()
     {
         $this->activityQuestions = new ArrayCollection();
-        $this->classroomQuestions = new ArrayCollection();
         $this->options = new ArrayCollection();
         $this->resultGroups = new ArrayCollection();
         $this->resultUsers = new ArrayCollection();
@@ -125,6 +130,52 @@ class Question
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set the value of session_id.
+     *
+     * @param integer $session_id
+     * @return \CoreBundle\Entity\Question
+     */
+    public function setSessionId($session_id)
+    {
+        $this->session_id = $session_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of session_id.
+     *
+     * @return integer
+     */
+    public function getSessionId()
+    {
+        return $this->session_id;
+    }
+
+    /**
+     * Set the value of question_type_id.
+     *
+     * @param integer $question_type_id
+     * @return \CoreBundle\Entity\Question
+     */
+    public function setQuestionTypeId($question_type_id)
+    {
+        $this->question_type_id = $question_type_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of question_type_id.
+     *
+     * @return integer
+     */
+    public function getQuestionTypeId()
+    {
+        return $this->question_type_id;
     }
 
     /**
@@ -197,29 +248,6 @@ class Question
     }
 
     /**
-     * Set the value of question_type_id.
-     *
-     * @param integer $question_type_id
-     * @return \CoreBundle\Entity\Question
-     */
-    public function setQuestionTypeId($question_type_id)
-    {
-        $this->question_type_id = $question_type_id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of question_type_id.
-     *
-     * @return integer
-     */
-    public function getQuestionTypeId()
-    {
-        return $this->question_type_id;
-    }
-
-    /**
      * Set the value of created_at.
      *
      * @param \DateTime $created_at
@@ -240,29 +268,6 @@ class Question
     public function getCreatedAt()
     {
         return $this->created_at;
-    }
-
-    /**
-     * Set the value of created_by.
-     *
-     * @param \DateTime $created_by
-     * @return \CoreBundle\Entity\Question
-     */
-    public function setCreatedBy($created_by)
-    {
-        $this->created_by = $created_by;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of created_by.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedBy()
-    {
-        return $this->created_by;
     }
 
     /**
@@ -312,6 +317,29 @@ class Question
     }
 
     /**
+     * Set the value of available.
+     *
+     * @param boolean $available
+     * @return \CoreBundle\Entity\Question
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of available.
+     *
+     * @return boolean
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
      * Add ActivityQuestion entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\ActivityQuestion $activityQuestion
@@ -345,42 +373,6 @@ class Question
     public function getActivityQuestions()
     {
         return $this->activityQuestions;
-    }
-
-    /**
-     * Add ClassroomQuestion entity to collection (one to many).
-     *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
-     * @return \CoreBundle\Entity\Question
-     */
-    public function addClassroomQuestion(ClassroomQuestion $classroomQuestion)
-    {
-        $this->classroomQuestions[] = $classroomQuestion;
-
-        return $this;
-    }
-
-    /**
-     * Remove ClassroomQuestion entity from collection (one to many).
-     *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
-     * @return \CoreBundle\Entity\Question
-     */
-    public function removeClassroomQuestion(ClassroomQuestion $classroomQuestion)
-    {
-        $this->classroomQuestions->removeElement($classroomQuestion);
-
-        return $this;
-    }
-
-    /**
-     * Get ClassroomQuestion entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClassroomQuestions()
-    {
-        return $this->classroomQuestions;
     }
 
     /**
@@ -492,6 +484,29 @@ class Question
     }
 
     /**
+     * Set Session entity (many to one).
+     *
+     * @param \CoreBundle\Entity\Session $session
+     * @return \CoreBundle\Entity\Question
+     */
+    public function setSession(Session $session = null)
+    {
+        $this->session = $session;
+
+        return $this;
+    }
+
+    /**
+     * Get Session entity (many to one).
+     *
+     * @return \CoreBundle\Entity\Session
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
      * Set QuestionType entity (many to one).
      *
      * @param \CoreBundle\Entity\QuestionType $questionType
@@ -516,6 +531,6 @@ class Question
 
     public function __sleep()
     {
-        return array('id', 'title', 'detail', 'suggestion', 'question_type_id', 'created_at', 'created_by', 'showanswer', 'showresults');
+        return array('id', 'session_id', 'question_type_id', 'title', 'detail', 'suggestion', 'created_at', 'showanswer', 'showresults', 'available');
     }
 }

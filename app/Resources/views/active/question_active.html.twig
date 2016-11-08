@@ -1,0 +1,73 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <h1>Clase # {{classroom.id}}</h1>
+    <h3>{{classroom.code}} : {{classroom.name}}</h3>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastchange</th>
+                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# GENERAL OPTIONS #}
+    <ul>
+      <li><a href="#">Estudiantes</a></li>
+      <li><a href="#">Grupos</a></li>
+    </ul>
+    {# QUESTION TYPES #}
+    {% if questiontype %}
+      <table class="">
+        <tr>
+            <th>Nombre</th>
+            <td>{{questiontype.name}}</td>
+        </tr>
+        <tr>
+            <th>Explicacion</th>
+            <td>{{questiontype.explanation}}</td>
+        </tr>
+      </table>
+    {%  endif %}
+
+    {# OPEN/CLOSE THE QUESTION #}
+    {{form_start(form)}}
+      {% if question.available == true %}
+        <input type="submit" value="Cerra Pregunta">
+        <b>Al cerrar la pregunta, no se permiten en envio de más respuestas</b>
+      {% else %}
+        <input type="submit" value="Abrir Pregunta">
+        <b>No pueden existir dos preguntas habiertas al mismo tiempo</b>
+      {% endif %}
+    {{form_end(form)}}
+
+
+    {# QUESTION #}
+    {% if question %}
+    <table class="">
+      <tr>
+          <th>Título</th>
+          <td>{{question.title}}</td>
+      </tr>
+      {% if question.detail %}
+      <tr>
+          <th>Explicacion</th>
+          <td>{{question.detail}}</td>
+      </tr>
+      {% endif %}
+      {% if question.suggestion %}
+      <tr>
+          <th>Sugerencia</th>
+          <td>{{question.suggestion}}</td>
+      </tr>
+      {% endif %}
+    </table>
+    {% endif %}
+
+{% endblock %}

@@ -42,10 +42,10 @@ class Session
     protected $classroomActivities;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassroomQuestion", mappedBy="session")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="session")
      * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
      */
-    protected $classroomQuestions;
+    protected $questions;
 
     /**
      * @ORM\ManyToOne(targetEntity="Classroom", inversedBy="sessions")
@@ -56,7 +56,7 @@ class Session
     public function __construct()
     {
         $this->classroomActivities = new ArrayCollection();
-        $this->classroomQuestions = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     /**
@@ -188,39 +188,39 @@ class Session
     }
 
     /**
-     * Add ClassroomQuestion entity to collection (one to many).
+     * Add Question entity to collection (one to many).
      *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
+     * @param \CoreBundle\Entity\Question $question
      * @return \CoreBundle\Entity\Session
      */
-    public function addClassroomQuestion(ClassroomQuestion $classroomQuestion)
+    public function addQuestion(Question $question)
     {
-        $this->classroomQuestions[] = $classroomQuestion;
+        $this->questions[] = $question;
 
         return $this;
     }
 
     /**
-     * Remove ClassroomQuestion entity from collection (one to many).
+     * Remove Question entity from collection (one to many).
      *
-     * @param \CoreBundle\Entity\ClassroomQuestion $classroomQuestion
+     * @param \CoreBundle\Entity\Question $question
      * @return \CoreBundle\Entity\Session
      */
-    public function removeClassroomQuestion(ClassroomQuestion $classroomQuestion)
+    public function removeQuestion(Question $question)
     {
-        $this->classroomQuestions->removeElement($classroomQuestion);
+        $this->questions->removeElement($question);
 
         return $this;
     }
 
     /**
-     * Get ClassroomQuestion entity collection (one to many).
+     * Get Question entity collection (one to many).
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getClassroomQuestions()
+    public function getQuestions()
     {
-        return $this->classroomQuestions;
+        return $this->questions;
     }
 
     /**

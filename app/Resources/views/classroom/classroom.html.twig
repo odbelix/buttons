@@ -1,0 +1,34 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <h1>Clase # {{classroom.id}}</h1>
+    <h3>{{classroom.code}} : {{classroom.name}}</h3>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastchange</th>
+                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# GENERAL OPTIONS #}
+    <ul>
+      <li><a href="#">Estudiantes</a></li>
+      <li><a href="#">Grupos</a></li>
+      <li><a href="#">Sesiones</a></li>
+    </ul>
+
+    {% if session %}
+      <b>Ya tienes una sesión iniciada {{ session.createdat|time_diff }}, para continuar con actividades ingresa <a href="{{path('active_index',{'id':session.id})}}">aquí!</a></b>
+    {% else %}
+    {{ form_start(sessionform) }}
+        <input type="submit" value="Iniciar Sesión">
+    {{ form_end(sessionform) }}
+    {% endif %}
+{% endblock %}

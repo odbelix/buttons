@@ -1,0 +1,62 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <h1>Clase # {{classroom.id}}</h1>
+    <h3>{{classroom.code}} : {{classroom.name}}</h3>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastchange</th>
+                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# GENERAL OPTIONS #}
+    <ul>
+      <li><a href="#">Estudiantes</a></li>
+      <li><a href="#">Grupos</a></li>
+    </ul>
+    {% if session and session.finishedat == null %}
+      <div >La sección esta activida <b>{{ session.createdat|time_diff }}</b>
+      {{ form_start(sessionform) }}
+        <input type="submit" value="Terminar sesión">
+      {{ form_end(sessionform) }}
+      </div>
+
+      {% if question %}
+        <div >Existe una pregunta Activa, puedes revisarla <a href="{{path('active_question',{'id':question.id,'session':session.id,'classroom':classroom.id})}}">aquí</a>
+        </div>
+      {% else %}
+        {# QUESTION TYPES #}
+        {% for question in questiontypes %}
+          <a href="{{path('active_question_new',{'type':question.id,'session':session.id})}}">{{question.name}}</a><br>
+        {% endfor %}
+      {% endif %}
+
+      {% if questions %}
+        <ul>
+        {% for question in questions %}
+            <li><a href="">{{question.title}}</a></li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <b>No existe preguntas asociadas a esta sesión.</b>
+      {% endif %}
+
+    {% else%}
+      {# CHECK #}
+    {% endif %}
+
+
+
+
+
+
+
+{% endblock %}

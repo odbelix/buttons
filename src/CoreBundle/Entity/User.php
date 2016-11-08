@@ -32,6 +32,12 @@ class User extends BaseUser
     protected $classrooms;
 
     /**
+     * @ORM\OneToMany(targetEntity="Enrollment", mappedBy="user")
+     * @ORM\JoinColumn(name="id", referencedColumnName="user_id", nullable=false)
+     */
+    protected $enrollments;
+
+    /**
      * @ORM\OneToMany(targetEntity="GroupMember", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id", nullable=false)
      */
@@ -43,12 +49,20 @@ class User extends BaseUser
      */
     protected $resultUsers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Subscription", mappedBy="user")
+     * @ORM\JoinColumn(name="id", referencedColumnName="user_id", nullable=false)
+     */
+    protected $subscriptions;
+
     public function __construct()
     {
         parent::__construct();
         $this->classrooms = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
         $this->groupMembers = new ArrayCollection();
         $this->resultUsers = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -134,6 +148,42 @@ class User extends BaseUser
     }
 
     /**
+     * Add Enrollment entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Enrollment $enrollment
+     * @return \CoreBundle\Entity\User
+     */
+    public function addEnrollment(Enrollment $enrollment)
+    {
+        $this->enrollments[] = $enrollment;
+
+        return $this;
+    }
+
+    /**
+     * Remove Enrollment entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Enrollment $enrollment
+     * @return \CoreBundle\Entity\User
+     */
+    public function removeEnrollment(Enrollment $enrollment)
+    {
+        $this->enrollments->removeElement($enrollment);
+
+        return $this;
+    }
+
+    /**
+     * Get Enrollment entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnrollments()
+    {
+        return $this->enrollments;
+    }
+
+    /**
      * Add GroupMember entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\GroupMember $groupMember
@@ -203,6 +253,42 @@ class User extends BaseUser
     public function getResultUsers()
     {
         return $this->resultUsers;
+    }
+
+    /**
+     * Add Subscription entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Subscription $subscription
+     * @return \CoreBundle\Entity\User
+     */
+    public function addSubscription(Subscription $subscription)
+    {
+        $this->subscriptions[] = $subscription;
+
+        return $this;
+    }
+
+    /**
+     * Remove Subscription entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\Subscription $subscription
+     * @return \CoreBundle\Entity\User
+     */
+    public function removeSubscription(Subscription $subscription)
+    {
+        $this->subscriptions->removeElement($subscription);
+
+        return $this;
+    }
+
+    /**
+     * Get Subscription entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 
     public function __sleep()

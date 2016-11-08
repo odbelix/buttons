@@ -1,1 +1,18 @@
-Hello World!
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+{% if classrooms %}
+  <ul>
+      {% for classroom in classrooms %}
+          <li><a href="{{path('classroom_home',{'id':classroom.id})}}">{{classroom.name}}</a></li>
+      {% endfor %}
+  </ul>
+{% else %}
+    <ul>
+        <li><a href="{{path('classroom_index')}}">Gestiona tus Aulas aquí!</a></li>
+    </ul>
+{% endif %}
+
+
+{% endblock %}
