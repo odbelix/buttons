@@ -1,34 +1,39 @@
 {% extends 'CoreBundle:Default:base.html.twig' %}
 
+{% block title %}
+  {{classroom.code}} : {{classroom.name}}
+{% endblock %}
+
 {% block content %}
-    <h1>Clase # {{classroom.id}}</h1>
-    <h3>{{classroom.code}} : {{classroom.name}}</h3>
-    <hr>
-    <table>
-        <tbody>
-            <tr>
-                <th>Created_at</th>
-                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Lastchange</th>
-                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    {# GENERAL OPTIONS #}
-    <ul>
-      <li><a href="#">Estudiantes</a></li>
-      <li><a href="#">Grupos</a></li>
-      <li><a href="#">Sesiones</a></li>
-    </ul>
-
-    {% if session %}
-      <b>Ya tienes una sesión iniciada {{ session.createdat|time_diff }}, para continuar con actividades ingresa <a href="{{path('active_index',{'id':session.id})}}">aquí!</a></b>
-    {% else %}
-    {{ form_start(sessionform) }}
-        <input type="submit" value="Iniciar Sesión">
-    {{ form_end(sessionform) }}
-    {% endif %}
+  <div class="mbr-cards-row row">
+        <ul>
+          <li><a href="#">Estudiantes</a></li>
+          <li><a href="#">Grupos</a></li>
+          <li><a href="{{path('classroom_sessions',{id:classroom.id})}}">Sesiones</a></li>
+        </ul>
+  </div>
+  <div class="mbr-cards-row row">
+    <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+    </div>
+    <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+        <div class="container">
+            <div class="card cart-block">
+                <div class="card-block">
+                    <h4 class="card-title"></h4>
+                    <div class="card-btn">
+                        {% if session %}
+                          <b>Tienes una sesión activa ({{ session.createdat|time_diff }})<br><a class="btn btn-success" href="{{path('active_index',{'id':session.id})}}">Ingresar</a></b>
+                        {% else %}
+                        {{ form_start(sessionform) }}
+                            <input class="btn btn-success" type="submit" value="Iniciar Sesión">
+                        {{ form_end(sessionform) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+    </div>
+  </div>
 {% endblock %}

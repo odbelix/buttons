@@ -66,6 +66,14 @@
           <th>Sugerencia</th>
           <td>{{question.suggestion}}</td>
       </tr>
+      <tr>
+          <th>Opciones</th>
+          <td><ul>
+          {% for option in question.options %}
+              <li>{% if option.iscorrect == true %}[C]{% endif %} {{option.detail}}</li>
+          {% endfor %}
+          </ul></td>
+      </tr>
       {% endif %}
     </table>
     {% endif %}

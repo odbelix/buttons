@@ -5,6 +5,7 @@ namespace CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,6 +30,9 @@ class QuestionType extends AbstractType
                 'label'    => '¿Desea mostrar los resultados de la pregunta?',
                 'required' => false,
             ))
+            ->add('options', CollectionType::class, array(
+            'entry_type' => OptionType::class
+        ));
         ;
     }
 

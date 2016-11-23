@@ -1,15 +1,14 @@
-<ul>
-  <li><a href="{{path('core_default_index')}}">Home</a></li>
+<ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+  <li class="nav-item"><a class="nav-link link" href="{{path('core_default_index')}}">INICIO</a></li>
   {% if is_granted('ROLE_DEVELOPER') %}
-    <li><a href="{{path('config_questiontype_index')}}">questiontype</a></li>
-    <li><a href="{{path('config_activitytype_index')}}">activitytype</a></li>
-    <li><a href="{{path('config_reporttype_index')}}">reporttype</a></li>
+    <li class="nav-item"><a class="nav-link link"  href="{{path('config_questiontype_index')}}">questiontype</a></li>
+    <li class="nav-item"><a class="nav-link link"  href="{{path('config_activitytype_index')}}">activitytype</a></li>
+    <li class="nav-item"><a class="nav-link link"  href="{{path('config_reporttype_index')}}">reporttype</a></li>
   {% endif %}
   {% if is_granted('ROLE_TEACHER') %}
-    <li><a href="{{path('classroom_index')}}">classroom</a></li>
+    <li class="nav-item"><a class="nav-link link"  href="{{path('classroom_index')}}">SALAS</a></li>
   {% endif %}
-  {% if is_granted('ROLE_STUDENT') %}
-    <li><a href="{{path('classroom_index')}}">classroom</a></li>
-  {% endif %}
-    <li><a href="javascript:history.back()">Volver</a></li>
+  <li class="nav-item"><a class="nav-link link" href="">MI PERFIL</a></li>
+  <li class="nav-item"><a class="nav-link link"  href="javascript:history.back()">VOLVER</a></li>
+  <li class="nav-item nav-btn"><a class="nav-link btn btn-danger" href="{{path('fos_user_security_logout')}}">SALIR</a></li>
 </ul>

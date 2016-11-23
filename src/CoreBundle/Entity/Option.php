@@ -163,4 +163,9 @@ class Option
     {
         return array('id', 'question_id', 'detail', 'iscorrect');
     }
+
+    public function __toString()
+    {
+        return $this->getDetail();
+    }
 }

@@ -72,7 +72,7 @@ class Question
     protected $activityQuestions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Option", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="Option", mappedBy="question",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
      */
     protected $options;

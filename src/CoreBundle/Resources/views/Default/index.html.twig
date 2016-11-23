@@ -1,18 +1,104 @@
 {% extends 'CoreBundle:Default:base.html.twig' %}
 
+{% block title %}
+Tus Salas de Clases Activas son:
+{% endblock %}
+
 {% block content %}
-
-{% if classrooms %}
-  <ul>
-      {% for classroom in classrooms %}
-          <li><a href="{{path('classroom_home',{'id':classroom.id})}}">{{classroom.name}}</a></li>
-      {% endfor %}
-  </ul>
+  {% if classrooms %}
+      <div class="mbr-cards-row row">
+      {% if classrooms|length == 1 %}
+          <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+          </div>
+          {% for classroom in classrooms %}
+                  <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+                      <div class="container">
+                          <div class="card cart-block">
+                              <div class="card-img iconbox"><a href="https://mobirise.com" class="etl-icon icon-edit mbr-iconfont mbr-iconfont-features4" style="color: black;"></a></div>
+                              <div class="card-block">
+                                  <h4 class="card-title">{{classroom.name}}</h4>
+                                  <h5 class="card-subtitle">{{classroom.code}}</h5>
+                                  <div class="card-btn"><a href="{{path('classroom_home',{'id':classroom.id})}}" class="btn btn-success">Ingresar</a></div>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+          {% endfor %}
+          <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+          </div>
+      {% endif %}
+      {% if classrooms|length == 2 %}
+          {% for classroom in classrooms %}
+                  <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+                      <div class="container">
+                          <div class="card cart-block">
+                              <div class="card-img iconbox"><a href="https://mobirise.com" class="etl-icon icon-edit mbr-iconfont mbr-iconfont-features4" style="color: black;"></a></div>
+                              <div class="card-block">
+                                  <h4 class="card-title">{{classroom.name}}</h4>
+                                  <h5 class="card-subtitle">{{classroom.code}}</h5>
+                                  <div class="card-btn"><a href="{{path('classroom_home',{'id':classroom.id})}}" class="btn btn-success">Ingresar</a></div>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+          {% endfor %}
+          <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+          </div>
+      {% endif %}
+      {% if classrooms|length > 2 %}
+          {% set count = 1 %}
+          {% for classroom in classrooms %}
+              {% if count < 3 %}
+                  <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+                      <div class="container">
+                          <div class="card cart-block">
+                              <div class="card-img iconbox"><a href="https://mobirise.com" class="etl-icon icon-edit mbr-iconfont mbr-iconfont-features4" style="color: black;"></a></div>
+                              <div class="card-block">
+                                  <h4 class="card-title">{{classroom.name}}</h4>
+                                  <h5 class="card-subtitle">{{classroom.code}}</h5>
+                                  <div class="card-btn"><a href="{{path('classroom_home',{'id':classroom.id})}}" class="btn btn-success">Ingresar</a></div>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+              {% endif %}
+              {% if count == 3 %}
+                  <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+                      <div class="container">
+                          <div class="card cart-block">
+                              <div class="card-img iconbox"><a href="https://mobirise.com" class="etl-icon icon-edit mbr-iconfont mbr-iconfont-features4" style="color: black;"></a></div>
+                              <div class="card-block">
+                                  <h4 class="card-title">Curso 2</h4>
+                                  <h5 class="card-subtitle">Código del Curso</h5>
+                                  <div class="card-btn"><a href="{{path('classroom_index')}}" class="btn btn-success">Gestiona tus Aulas aquí!</a></div>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+              {% endif %}
+              {% set count = count + 1 %}
+          {% endfor %}
+      {% endif %}
+      <div>
 {% else %}
-    <ul>
-        <li><a href="{{path('classroom_index')}}">Gestiona tus Aulas aquí!</a></li>
-    </ul>
+    <div class="mbr-cards-row row">
+      <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+      </div>
+      <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+          <div class="container">
+              <div class="card cart-block">
+                  <div class="card-img iconbox"><a href="https://mobirise.com" class="etl-icon icon-edit mbr-iconfont mbr-iconfont-features4" style="color: black;"></a></div>
+                  <div class="card-block">
+                      <h4 class="card-title">Curso 2</h4>
+                      <h5 class="card-subtitle">Código del Curso</h5>
+                      <div class="card-btn"><a href="{{path('classroom_index')}}" class="btn btn-success">Gestiona tus Aulas aquí!</a></div>
+                  </div>
+              </div>
+        </div>
+      </div>
+      <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+      </div>
+    <div>
 {% endif %}
-
 
 {% endblock %}

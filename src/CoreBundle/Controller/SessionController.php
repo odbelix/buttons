@@ -78,6 +78,28 @@ class SessionController extends Controller
     }
 
     /**
+     * Finds and displays a Session entity.
+     *
+     * @Route("/summary/{id}", name="session_summary")
+     * @Method("GET")
+     */
+    public function summaryAction(Session $session)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $questions = $em->getRepository('CoreBundle:Question')->findBy(array('session_id' => $session->getId()));
+        $classroom = $em->getRepository('CoreBundle:Classroom')->findOneBy(array('id' => $session->getClassroomId()));
+
+        return $this->render('session/summary.html.twig', array(
+            'session' => $session,
+            'classroom' => $classroom,
+            'questions' => $questions,
+        ));
+    }
+
+
+
+
+    /**
      * Finish one Session
      *
      * @Route("/{id}/finish", name="session_finish")

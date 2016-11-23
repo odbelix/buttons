@@ -129,6 +129,23 @@ class ClassroomController extends Controller
         ));
     }
 
+    /**
+     * Finds and displays a Classroom entity.
+     *
+     * @Route("/home/sessions/{id}", name="classroom_sessions")
+     * @Method({"GET","POST"})
+     */
+    public function sessionsAction(Request $request,Classroom $classroom)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $this->validateUserClassroom($classroom);
+        $sessions = $em->getRepository('CoreBundle:Session')->findBy(array('classroom_id' => $classroom->getId()));
+
+        return $this->render('session/sessions.html.twig', array(
+            'sessions' => $sessions,
+            'classroom' => $classroom,
+        ));
+    }
 
 
 

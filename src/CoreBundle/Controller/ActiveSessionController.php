@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use CoreBundle\Entity\Session;
 use CoreBundle\Entity\Question;
+use CoreBundle\Entity\Option;
 use CoreBundle\Entity\ClassroomQuestion;
 use CoreBundle\Entity\Classroom;
 use CoreBundle\Form\SessionType;
@@ -39,6 +40,11 @@ class ActiveSessionController extends Controller
         $sessionform = $this->createSessionFinishForm($session);
         $sessionform->handleRequest($request);
 
+        if ( $session->getFinishedAt() != null ) {
+            return $this->redirectToRoute('session_summary', array('id' => $session->getId()));
+        }
+
+
         if ($sessionform->isSubmitted() && $sessionform->isValid()) {
              $em = $this->getDoctrine()->getManager();
              $session->setFinishedAt(new \DateTime("now"));
@@ -46,7 +52,7 @@ class ActiveSessionController extends Controller
              $em->flush();
 
              //REDIRECT TO RESUMEN
-             return $this->redirectToRoute('active_index', array('id' => $session->getId()));
+             return $this->redirectToRoute('session_summary', array('id' => $session->getId()));
         }
 
         return $this->render('active/home.html.twig', array(
@@ -152,20 +158,57 @@ class ActiveSessionController extends Controller
           $question = new Question();
           $question->setQuestionType($questiontype);
           $question->setSession($session);
-          $form = $this->createForm('CoreBundle\Form\QuestionType', $question);
-          $form->handleRequest($request);
-
 
           //CHECK QuestionType
           if ($questiontype->getMultiplechoice() == true ) {
+              $option1 = new Option();
+              $question->getOptions()->add($option1);
+              $option1->setQuestion($question);
 
+              $option2 = new Option();
+              $question->getOptions()->add($option2);
+              $option2->setQuestion($question);
+
+              $option3 = new Option();
+              $question->getOptions()->add($option3);
+              $option3->setQuestion($question);
+
+              $option4 = new Option();
+              $question->getOptions()->add($option4);
+              $option4->setQuestion($question);
           }
           if ($questiontype->getOneoption() == true ) {
+              $option1 = new Option();
+              $option1->setIscorrect(true);
+              $question->getOptions()->add($option1);
+              $option1->setQuestion($question);
 
+              $option2 = new Option();
+              $question->getOptions()->add($option2);
+              $option2->setQuestion($question);
+
+              $option3 = new Option();
+              $question->getOptions()->add($option3);
+              $option3->setQuestion($question);
+
+              $option4 = new Option();
+              $question->getOptions()->add($option4);
+              $option4->setQuestion($question);
           }
           if ($questiontype->getBoolean() == true ) {
+              $optionTrue = new Option();
+              $optionTrue->setDetail("Verdadero");
+              $question->getOptions()->add($optionTrue);
+              $optionTrue->setQuestion($question);
 
+              $optionFalse = new Option();
+              $optionFalse->setDetail("Falso");
+              $question->getOptions()->add($optionFalse);
+              $optionFalse->setQuestion($question);
           }
+
+          $form = $this->createForm('CoreBundle\Form\QuestionType', $question);
+          $form->handleRequest($request);
           //
           //
           if ($form->isSubmitted() && $form->isValid()) {
