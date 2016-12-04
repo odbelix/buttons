@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreBundle\Entity\ResultUser
  *
  * @ORM\Entity()
- * @ORM\Table(name="result_user", indexes={@ORM\Index(name="fk_result_question1_idx", columns={"question_id"}), @ORM\Index(name="fk_result_user1_idx", columns={"user_id"})})
+ * @ORM\Table(name="result_user", indexes={@ORM\Index(name="fk_result_question1_idx", columns={"question_id"}), @ORM\Index(name="fk_result_user1_idx", columns={"user_id"}), @ORM\Index(name="fk_result_user_option1_idx", columns={"option_id"})})
  */
 class ResultUser
 {
@@ -50,6 +50,11 @@ class ResultUser
     protected $activity_id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $option_id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Question", inversedBy="resultUsers")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=false)
      */
@@ -60,6 +65,12 @@ class ResultUser
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Option", inversedBy="resultUsers")
+     * @ORM\JoinColumn(name="option_id", referencedColumnName="id", nullable=false)
+     */
+    protected $option;
 
     public function __construct()
     {
@@ -227,6 +238,29 @@ class ResultUser
     }
 
     /**
+     * Set the value of option_id.
+     *
+     * @param integer $option_id
+     * @return \CoreBundle\Entity\ResultUser
+     */
+    public function setOptionId($option_id)
+    {
+        $this->option_id = $option_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of option_id.
+     *
+     * @return integer
+     */
+    public function getOptionId()
+    {
+        return $this->option_id;
+    }
+
+    /**
      * Set Question entity (many to one).
      *
      * @param \CoreBundle\Entity\Question $question
@@ -272,8 +306,31 @@ class ResultUser
         return $this->user;
     }
 
+    /**
+     * Set Option entity (many to one).
+     *
+     * @param \CoreBundle\Entity\Option $option
+     * @return \CoreBundle\Entity\ResultUser
+     */
+    public function setOption(Option $option = null)
+    {
+        $this->option = $option;
+
+        return $this;
+    }
+
+    /**
+     * Get Option entity (many to one).
+     *
+     * @return \CoreBundle\Entity\Option
+     */
+    public function getOption()
+    {
+        return $this->option;
+    }
+
     public function __sleep()
     {
-        return array('id', 'created_at', 'updated_at', 'question_id', 'user_id', 'iscorrect', 'activity_id');
+        return array('id', 'created_at', 'updated_at', 'question_id', 'user_id', 'iscorrect', 'activity_id', 'option_id');
     }
 }

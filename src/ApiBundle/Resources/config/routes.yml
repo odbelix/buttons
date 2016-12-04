@@ -1,0 +1,10 @@
+##FOR API
+question:
+     type:     rest
+     prefix:   api/v1
+     resource: ApiBundle\Controller\QuestionController
+#
+# profile:
+#     type:     rest
+#     prefix:   api/v1
+#     resource: ApiBundle\Controller\UserApiController

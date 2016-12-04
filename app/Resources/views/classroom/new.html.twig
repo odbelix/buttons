@@ -1,16 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
 
-{% block body %}
-    <h1>Classroom creation</h1>
+{% block title %}Botonera: Mis Salas{% endblock %}
+{% block section_title %} Nueva Salas {% endblock %}
+{% block section_action %}<a class="btn btn-secondary" href="{{ path('classroom_index') }}">Volver</a>{% endblock %}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('classroom_index') }}">Back to the list</a>
-        </li>
-    </ul>
+{% block section_content %}
+<section class="mbr-section" id="pricing-table2-1b" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
+    <div class="mbr-section mbr-section-nopadding mbr-price-table">
+      <div class="row">
+            <div class="col-xs-12  col-md-6 col-xl-3">
+            </div>
+            <div class="col-xs-12  col-md-6 col-xl-6">
+            {{ form_start(form) }}
+              <div class="form-group">
+                <label class="mbr-price-term">{{form_label(form.code)}}</label>
+                {{ form_widget(form.code,{ 'attr': {'class': 'form-control'} }) }}
+              </div>
+              <div class="form-group">
+                <label class="mbr-price-term">{{form_label(form.name)}}</label>
+                {{ form_widget(form.name,{ 'attr': {'class': 'form-control'} }) }}
+              </div>
+                <input type="submit" class="btn btn-success form-control" value="Crear" />
+            {{ form_end(form) }}
+            </div>
+            <div class="col-xs-12  col-md-6 col-xl-3">
+            </div>
+      </div>
+    </div>
+</section>
 {% endblock %}

@@ -1,48 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
 
-{% block body %}
-    <h1>Classroom</h1>
+{% block title %}Botonera: Sala{% endblock %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ classroom.id }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ classroom.code }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ classroom.name }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Lastchange</th>
-                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>User_id</th>
-                <td>{{ classroom.user }} / {{ classroom.user.email }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('classroom_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('classroom_edit', { 'id': classroom.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+{% block section_title %} {{ classroom.name }} {% endblock %}
+{% block section_action %}<a class="btn btn-secondary"  href="{{ path('classroom_index') }}">Volver</a>{% endblock %}
+{% block section_content %}
+<section class="mbr-section" id="pricing-table2-1b" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
+    <div class="mbr-section mbr-section-nopadding mbr-price-table">
+      <div class="row">
+            <div class="col-xs-12  col-md-6 col-xl-3">
+            </div>
+            <div class="col-xs-12  col-md-6 col-xl-6">
+                <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                      <tr>
+                          <th>Código SGC</th>
+                          <td>{{ classroom.code }}</td>
+                      </tr>
+                      <tr>
+                          <th>Nombre</th>
+                          <td>{{ classroom.name }}</td>
+                      </tr>
+                      <tr>
+                          <th>Fecha de creación</th>
+                          <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+                      </tr>
+                      <tr>
+                          <td colspan="2">
+                              <a class="btn btn-info" href="{{ path('classroom_edit', { 'id': classroom.id }) }}">Editar</a>
+                              {{ form_start(delete_form) }}
+                                  <input class="btn btn-danger" type="submit" value="Eliminar">
+                              {{ form_end(delete_form) }}
+                          </td>
+                      </tr>
+                   </tbody>
+                   </table>
+                   </div>
+               </div>
+               <div class="col-xs-12  col-md-6 col-xl-3">
+               </div>
+           </div>
+     </div>
+</section>
 {% endblock %}

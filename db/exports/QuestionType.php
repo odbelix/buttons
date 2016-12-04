@@ -66,6 +66,11 @@ class QuestionType
     protected $created_at;
 
     /**
+     * @ORM\Column(type="string", length=45)
+     */
+    protected $icon;
+
+    /**
      * @ORM\OneToMany(targetEntity="Question", mappedBy="questionType")
      * @ORM\JoinColumn(name="id", referencedColumnName="question_type_id", nullable=false)
      */
@@ -307,6 +312,29 @@ class QuestionType
     }
 
     /**
+     * Set the value of icon.
+     *
+     * @param string $icon
+     * @return \CoreBundle\Entity\QuestionType
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of icon.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
      * Add Question entity to collection (one to many).
      *
      * @param \CoreBundle\Entity\Question $question
@@ -344,6 +372,6 @@ class QuestionType
 
     public function __sleep()
     {
-        return array('id', 'available', 'boolean', 'explanation', 'externalsource', 'name', 'multiplechoice', 'oneoption', 'shortanswer', 'created_at');
+        return array('id', 'available', 'boolean', 'explanation', 'externalsource', 'name', 'multiplechoice', 'oneoption', 'shortanswer', 'created_at', 'icon');
     }
 }

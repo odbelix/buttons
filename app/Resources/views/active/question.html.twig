@@ -1,47 +1,82 @@
-{% extends 'CoreBundle:Default:base.html.twig' %}
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
 
-{% block content %}
-    <h1>Clase # {{classroom.id}}</h1>
-    <h3>{{classroom.code}} : {{classroom.name}}</h3>
-    <hr>
-    <table>
-        <tbody>
-            <tr>
-                <th>Created_at</th>
-                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Lastchange</th>
-                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block title %}Botonera: {{classroom.name}}{% endblock %}
 
-    {# GENERAL OPTIONS #}
-    <ul>
-      <li><a href="#">Estudiantes</a></li>
-      <li><a href="#">Grupos</a></li>
-    </ul>
-    {# QUESTION TYPES #}
-    {% if questiontype %}
-      <table class="">
-        <tr>
-            <th>Nombre</th>
-            <td>{{questiontype.name}}</td>
-        </tr>
-        <tr>
-            <th>Explicacion</th>
-            <td>{{questiontype.explanation}}</td>
-        </tr>
-      </table>
-    {%  endif %}
-    {# QUESTION FORM #}
+{% block section_title %} {{classroom.name}} {% endblock %}
+{% block section_subtitle %} {{classroom.code}} {% endblock %}
+{% block section_action %}
+La sección esta activida <b>{{ session.createdat|time_diff }}
+{% endblock %}
 
-    {{ form_start(form) }}
-        <input type="submit" value="Publicar">
-         {% for option in form.options %}
-            <li>{{ form_row(option.detail) }} | {{ form_row(option.iscorrect) }} </li>
-         {% endfor %}
-    {{ form_end(form) }}
+{% block section_content %}
+<section class="mbr-section" id="question-table2-1s" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
+    <div class="mbr-section mbr-section__container mbr-section__container--middle">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 text-xs-center">
+                  <h3 class="mbr-section-title display-2">{{questiontype.name}}</h3>
+                  <small class="mbr-section-subtitle">{{questiontype.explanation}}</small>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="mbr-section mbr-section-nopadding mbr-price-table">
+      <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-12 col-xl-6 col-xl-offset-3">
+                <div class="mbr-plan card text-xs-center">
+                    <div class="mbr-plan-header card-block">
+                      <div class="card-text">
+                            {{ form_start(form) }}
+                              <div class="form-group">
+                                <label class="mbr-price-term">{{form_label(form.title)}}</label>
+                                {{ form_widget(form.title,{ 'attr': {'class': 'form-control'} }) }}
+                              </div>
+                              <div class="form-group">
+                                <label class="mbr-price-term">{{form_label(form.detail)}}</label>
+                                {{ form_widget(form.detail,{ 'attr': {'class': 'form-control'} }) }}
+                              </div>
 
+                              <div class="form-group">
+                                <label class="mbr-price-term">{{form_label(form.showanswer)}}</label>
+                                {{ form_widget(form.showanswer,{ 'attr': {'class': 'form-control'} }) }}
+                              </div>
+                              <div class="form-group">
+                                <label class="mbr-price-term">{{form_label(form.showresults)}}</label>
+                                {{ form_widget(form.showresults,{ 'attr': {'class': 'form-control'} }) }}
+                              </div>
+                              {% set count = 1 %}
+                              <hr>
+                              {% for option in form.options %}
+                                  <div class="form-group">
+                                      <label class="mbr-price-term">{{ form_label(option.detail) }} {{count}}</label>
+                                      {% if questiontype.id == 3 %}
+                                       {{ form_widget(option.detail,{ 'attr': {'class': 'form-control','readonly':'readonly'} }) }}
+                                      {% else %}
+                                       {{ form_widget(option.detail,{ 'attr': {'class': 'form-control'} }) }}
+                                      {% endif %}
+                                      <label class="mbr-price-term">{{ form_label(option.iscorrect) }}</label>
+                                       {{ form_widget(option.iscorrect,{ 'attr': {'class': 'form-control','onClick':'validarEsCorrectoVOF(this.id)'} }) }}
+                                  </div>
+                                  {% set count = count + 1 %}
+                              {% endfor %}
+                              <div class="form-group">
+                                <input class="btn btn-success form-control" type="submit" value="Publicar">
+                              </div>
+                            {{ form_end(form) }}
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+function validarEsCorrectoVOF(id){
+    var check = $("#"+id);
+
+}
+</script>
 {% endblock %}

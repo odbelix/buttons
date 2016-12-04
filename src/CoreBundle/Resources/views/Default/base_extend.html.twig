@@ -1,0 +1,25 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+<section class="engine"></section><section class="mbr-section article mbr-after-navbar" id="msg-box3-18" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-xs-center">
+                <h3 class="mbr-section-title display-2">{% block section_title %}{% endblock %}</h3>
+                <div class="lead"><p>{% block section_subtitle %}{% endblock %}</p></div>
+                <div>{% block section_action %}{% endblock %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% block section_content %}{% endblock %}
+<section class="mbr-section mbr-section__container" id="buttons1-1w" style="background-color: rgb(255, 255, 255); padding-top: 20px; padding-bottom: 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

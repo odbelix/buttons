@@ -30,7 +30,10 @@ class ClassroomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $classrooms = $em->getRepository('CoreBundle:Classroom')->findBy(array('user_id' => $this->getUser()->getId()));
+        $classrooms = $em->getRepository('CoreBundle:Classroom')->findBy(
+            array('user_id' => $this->getUser()->getId()),
+            array('id' => 'DESC')
+                );
 
         return $this->render('classroom/index.html.twig', array(
             'classrooms' => $classrooms,
@@ -61,7 +64,7 @@ class ClassroomController extends Controller
             $em->persist($classroom);
             $em->flush();
 
-            return $this->redirectToRoute('classroom_show', array('id' => $classroom->getId()));
+            return $this->redirectToRoute('classroom_index');
         }
 
         return $this->render('classroom/new.html.twig', array(
@@ -96,7 +99,17 @@ class ClassroomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $this->validateUserClassroom($classroom);
+
         $session = $em->getRepository('CoreBundle:Session')->findOneBy(array('finished_at' => null));
+        $sessions = $em->getRepository('CoreBundle:Session')->findBy(array('classroom_id' => $classroom->getId()));
+
+        $activities = array();
+        foreach ($sessions as $se) {
+            $ses = $em->getRepository('CoreBundle:Question')->findBy(array('session_id' => $se->getId()));
+            foreach ($ses as $question) {
+              array_push($activities,$question);
+            }
+        }
 
         $sessionform = $this->createFormBuilder()
             ->setAction($this->generateUrl('classroom_home', array('id' => $classroom->getId())))
@@ -125,6 +138,8 @@ class ClassroomController extends Controller
         return $this->render('classroom/classroom.html.twig', array(
             'sessionform' => $sessionform->createView(),
             'session' => $session,
+            'sessions' => $sessions,
+            'activities' => $activities,
             'classroom' => $classroom,
         ));
     }
@@ -168,7 +183,7 @@ class ClassroomController extends Controller
             $em->persist($classroom);
             $em->flush();
 
-            return $this->redirectToRoute('classroom_edit', array('id' => $classroom->getId()));
+            return $this->redirectToRoute('classroom_show', array('id' => $classroom->getId()));
         }
 
         return $this->render('classroom/edit.html.twig', array(

@@ -87,14 +87,31 @@ class ActiveSessionController extends Controller
      * @Method({"GET", "POST"})
      */
     public function activeQuestionAction(Request $request,Question $question,Session $session,Classroom $classroom)
-    {
+    {     $logger = $this->get('logger');
           $em = $this->getDoctrine()->getManager();
           $questiontype = $em->getRepository('CoreBundle:QuestionType')->findOneBy(array('id' => $question->getQuestionTypeId()));
 
-          $form = $this->createAvailableQuestionForm($question, $session, $classroom);
-          $form->handleRequest($request);
+          $questionform = $this->createFormBuilder()
+              ->setAction($this->generateUrl('active_question',
+              array('id' => $question->getId(),'session' => $session->getId(), 'classroom' => $classroom->getId())
+              ))
+              ->add('classroom_id', HiddenType::class, array(
+                  'data' => $classroom->getId()
+                ))
+              ->add('session_id', HiddenType::class, array(
+                    'data' => $session->getId()
+                ))
+              ->add('question_id', HiddenType::class, array(
+                    'data' => $question->getId()
+                ))
+              ->setMethod('POST')
+              ->getForm()
+          ;
+          $questionform->handleRequest($request);
+          $logger->info('-------------------------------------------------------------------------------1');
+          if ($questionform->isSubmitted()) {
 
-          if ($form->isSubmitted() && $form->isValid()) {
+               $logger->info('-------------------------------------------------------------------------------2');
                $em = $this->getDoctrine()->getManager();
                if ($question->getAvailable() == true )
                   $question->setAvailable(false);
@@ -113,7 +130,7 @@ class ActiveSessionController extends Controller
               'question' => $question,
               'classroom' => $classroom,
               'questiontype' => $questiontype,
-              'form' => $form->createView(),
+              'questionform' => $questionform->createView(),
           ));
     }
 
@@ -123,6 +140,15 @@ class ActiveSessionController extends Controller
             ->setAction($this->generateUrl('active_question',
             array('id' => $question->getId(),'session' => $session->getId(), 'classroom' => $classroom->getId())
             ))
+            ->add('classroom_id', HiddenType::class, array(
+                'data' => $classroom->getId()
+              ))
+            ->add('session_id', HiddenType::class, array(
+                  'data' => $session->getId()
+              ))
+            ->add('question_id', HiddenType::class, array(
+                  'data' => $question->getId()
+              ))
             ->setMethod('POST')
             ->getForm()
         ;

@@ -4,7 +4,6 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CoreBundle\Entity\Classroom
@@ -23,13 +22,11 @@ class Classroom
 
     /**
      * @ORM\Column(type="string", length=45)
-     * @Assert\NotBlank(message = "Debes indicar un codigo para su identificacion")
      */
     protected $code;
 
     /**
      * @ORM\Column(name="`name`", type="string", length=200)
-     * @Assert\NotBlank(message = "Debes indicar un nombre")
      */
     protected $name;
 
@@ -437,10 +434,5 @@ class Classroom
     public function __sleep()
     {
         return array('id', 'code', 'name', 'created_at', 'lastchange', 'user_id');
-    }
-
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

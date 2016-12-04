@@ -29,11 +29,12 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 provider: fos_userbundle
                 use_referer: true
+                default_target_path: core_default_home
             logout: true
             pattern: ^/
             remember_me:
                 lifetime: 31536000 # 604800 # 1 week in seconds
-                path: /
+                path: /home
                 secret: '%secret%'
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the
@@ -41,6 +42,7 @@ security:
                 #always_remember_me: true
 
     access_control:
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/invitation, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -48,7 +50,7 @@ security:
         ## For the API
         - { path: ^/api, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, role: ROLE_STUDENT }
-        - { path: ^/config, role: ROLE_DEVELOPER }            
+        - { path: ^/config, role: ROLE_DEVELOPER }
             # activate different ways to authenticate
 
             # http_basic: ~

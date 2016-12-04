@@ -1,5 +1,5 @@
 <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-  <li class="nav-item"><a class="nav-link link" href="{{path('core_default_index')}}">INICIO</a></li>
+  <li class="nav-item"><a class="nav-link link" href="{{path('core_default_home')}}">INICIO</a></li>
   {% if is_granted('ROLE_DEVELOPER') %}
     <li class="nav-item"><a class="nav-link link"  href="{{path('config_questiontype_index')}}">questiontype</a></li>
     <li class="nav-item"><a class="nav-link link"  href="{{path('config_activitytype_index')}}">activitytype</a></li>
@@ -8,7 +8,7 @@
   {% if is_granted('ROLE_TEACHER') %}
     <li class="nav-item"><a class="nav-link link"  href="{{path('classroom_index')}}">SALAS</a></li>
   {% endif %}
-  <li class="nav-item"><a class="nav-link link" href="">MI PERFIL</a></li>
+  <li class="nav-item"><a class="nav-link link" href="">PERFIL</a></li>
   <li class="nav-item"><a class="nav-link link"  href="javascript:history.back()">VOLVER</a></li>
   <li class="nav-item nav-btn"><a class="nav-link btn btn-danger" href="{{path('fos_user_security_logout')}}">SALIR</a></li>
 </ul>

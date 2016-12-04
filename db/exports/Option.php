@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * CoreBundle\Entity\Option
@@ -35,6 +36,12 @@ class Option
     protected $iscorrect;
 
     /**
+     * @ORM\OneToMany(targetEntity="ResultUser", mappedBy="option")
+     * @ORM\JoinColumn(name="id", referencedColumnName="option_id", nullable=false)
+     */
+    protected $resultUsers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Question", inversedBy="options")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=false)
      */
@@ -42,6 +49,7 @@ class Option
 
     public function __construct()
     {
+        $this->resultUsers = new ArrayCollection();
     }
 
     /**
@@ -134,6 +142,42 @@ class Option
     public function getIscorrect()
     {
         return $this->iscorrect;
+    }
+
+    /**
+     * Add ResultUser entity to collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultUser $resultUser
+     * @return \CoreBundle\Entity\Option
+     */
+    public function addResultUser(ResultUser $resultUser)
+    {
+        $this->resultUsers[] = $resultUser;
+
+        return $this;
+    }
+
+    /**
+     * Remove ResultUser entity from collection (one to many).
+     *
+     * @param \CoreBundle\Entity\ResultUser $resultUser
+     * @return \CoreBundle\Entity\Option
+     */
+    public function removeResultUser(ResultUser $resultUser)
+    {
+        $this->resultUsers->removeElement($resultUser);
+
+        return $this;
+    }
+
+    /**
+     * Get ResultUser entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultUsers()
+    {
+        return $this->resultUsers;
     }
 
     /**

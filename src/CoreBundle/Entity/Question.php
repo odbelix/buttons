@@ -89,17 +89,17 @@ class Question
      */
     protected $resultUsers;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Session", inversedBy="questions")
-     * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
-     */
-    protected $session;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity="Session", inversedBy="questions")
+    //  * @ORM\JoinColumn(name="session_id", referencedColumnName="id", nullable=false)
+    //  */
+    // protected $session;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
-     * @ORM\JoinColumn(name="question_type_id", referencedColumnName="id", nullable=false)
-     */
-    protected $questionType;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
+    //  * @ORM\JoinColumn(name="question_type_id", referencedColumnName="id", nullable=false)
+    //  */
+    // protected $questionType;
 
     public function __construct()
     {

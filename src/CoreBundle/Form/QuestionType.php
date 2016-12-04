@@ -20,15 +20,17 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,array( 'label'  => 'Pregunta' ))
-            ->add('detail',TextareaType::class,array( 'label'  => 'Descripción o Detalle' ))
-            ->add('suggestion',TextareaType::class,array( 'label'  => 'Sugerencia' ))
+            ->add('detail',TextareaType::class,array( 'label'  => 'Descripción o Detalle',
+                  'required' => false))
+            //->add('suggestion',TextareaType::class,array( 'label'  => 'Sugerencia',
+            //      'required' => false))
             ->add('showanswer',CheckboxType::class, array(
                 'label'    => '¿Desea mostrar respuesta correcta?',
                 'required' => false,
             ))
             ->add('showresults',CheckboxType::class, array(
-                'label'    => '¿Desea mostrar los resultados de la pregunta?',
-                'required' => false,
+               'label'    => '¿Desea mostrar los resultados de la pregunta?',
+               'required' => false,
             ))
             ->add('options', CollectionType::class, array(
             'entry_type' => OptionType::class
