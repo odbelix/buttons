@@ -10,7 +10,7 @@ puedes gestionar los estudiantes y las sesiones.{% endblock %}
 {% block section_content %}
 <section class="mbr-cards mbr-section mbr-section-nopadding" id="features4-d" style="background-color: rgb(255, 255, 255);">
 {% if classrooms %}
-    {% if classrooms|length > 2 %}
+    {% if classrooms|length > 0 %}
         {% set count = 1 %}
         {% for classroom in classrooms %}
             {% if count == 1 %}

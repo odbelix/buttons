@@ -41,11 +41,11 @@ class Session
      */
     protected $classroomActivities;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="session")
-     * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
-     */
-    protected $questions;
+    // /**
+    //  * @ORM\OneToMany(targetEntity="Question", mappedBy="session")
+    //  * @ORM\JoinColumn(name="id", referencedColumnName="session_id", nullable=false)
+    //  */
+    // protected $questions;
 
     /**
      * @ORM\ManyToOne(targetEntity="Classroom", inversedBy="sessions")

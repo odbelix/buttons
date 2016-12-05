@@ -65,11 +65,11 @@ class Question
      */
     protected $available;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ActivityQuestion", mappedBy="question")
-     * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
-     */
-    protected $activityQuestions;
+    // /**
+    //  * @ORM\OneToMany(targetEntity="ActivityQuestion", mappedBy="question")
+    //  * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
+    //  */
+    // protected $activityQuestions;
 
     /**
      * @ORM\OneToMany(targetEntity="Option", mappedBy="question",cascade={"persist", "remove"})
@@ -77,17 +77,17 @@ class Question
      */
     protected $options;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ResultGroup", mappedBy="question")
-     * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
-     */
-    protected $resultGroups;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ResultUser", mappedBy="question")
-     * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
-     */
-    protected $resultUsers;
+    // /**
+    //  * @ORM\OneToMany(targetEntity="ResultGroup", mappedBy="question")
+    //  * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
+    //  */
+    // protected $resultGroups;
+    //
+    // /**
+    //  * @ORM\OneToMany(targetEntity="ResultUser", mappedBy="question")
+    //  * @ORM\JoinColumn(name="id", referencedColumnName="question_id", nullable=false)
+    //  */
+    // protected $resultUsers;
 
     // /**
     //  * @ORM\ManyToOne(targetEntity="Session", inversedBy="questions")

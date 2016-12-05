@@ -22,6 +22,7 @@ use UbiAppStatsBundle\Entity\ServiceStat;
 
 class QuestionController extends Controller
 {
+
   /**
     * Get list of courses
     * @Get("/classroom/{code}/question/get")
@@ -32,21 +33,53 @@ class QuestionController extends Controller
     */
     public function getAvailableQuestionAction($code)
     {
+          $jsonResponse = new JsonResponse();
           $em = $this->getDoctrine()->getManager();
           $et = $this->getDoctrine()->getEntityManager();
           $classroom = $em->getRepository('CoreBundle:Classroom')->findOneBy(array('code' => $code));
-          $session   = $em->getRepository('CoreBundle:Session')->findOneBy(array('classroom_id' => $classroom->getId(),'finished_at' =>  null));
-          $query  = $em->createQuery("
+          if ($classroom) {
+            $session   = $em->getRepository('CoreBundle:Session')->findOneBy(array('classroom_id' => $classroom->getId(),'finished_at' =>  null));
+            if (!$session) {
+              $jsonResponse->setData(array(
+                  "type" => "error",
+                  "message"=>"No existe una sesión de la sala abierta"
+              ));
+              return $jsonResponse;
+            }
+            $query  = $em->createQuery("
                           SELECT q, o
                           FROM CoreBundle\Entity\Question q
                           JOIN q.options o
                           WHERE  q.session_id = :id
                           AND q.available = 1")
                     ->setParameter('id', $session->getId());
-          try {
-            return $query->getSingleResult();
-          } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
+            try {
+              $question = $query->getSingleResult();
+              //$oldresult = $em->getRepository('CoreBundle:ResultUser')->findOneBy(array('user_id' => $user,'question_id' => $question->getId()));
+              // if($oldresult) {
+              //     $jsonResponse->setData(array(
+              //         "type" => "error",
+              //         "message"=>"Tu respuesta ya fue enviada para la pregunta Activa"
+              //     ));
+              //     return $jsonResponse;
+              // }
+
+
+              return $question;
+            } catch (\Doctrine\ORM\NoResultException $e) {
+              $jsonResponse->setData(array(
+                  "type" => "error",
+                  "message"=>"No existe una pregunta disponible"
+              ));
+              return $jsonResponse;
+            }
+          }
+          else {
+            $jsonResponse->setData(array(
+                "type" => "error",
+                "message"=>"El código de la sala es invalido"
+            ));
+            return $jsonResponse;
           }
     }
 
@@ -77,6 +110,14 @@ class QuestionController extends Controller
           $jsonResponse = new JsonResponse();
 
 
+          $oldresult = $em->getRepository('CoreBundle:ResultUser')->findOneBy(array('user_id' => $user,'question_id' => $question));
+          if($oldresult) {
+              $jsonResponse->setData(array(
+                  "type" => "error",
+                  "message"=>"Tu respuesta ya fue enviada para la pregunta Activa"
+              ));
+              return $jsonResponse;
+          }
 
           try {
           $nr = new ResultUser();
@@ -85,7 +126,6 @@ class QuestionController extends Controller
           $nr->setUserId($user);
           $nr->setIscorrect($iscorrect);
 
-          echo var_dump($nr);
           $nr->setCreatedAt(new \DateTime("now"));
           $em->persist($nr);
           $em->flush();

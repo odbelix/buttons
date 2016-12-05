@@ -39,39 +39,6 @@ La sección esta activida <b>{{ session.createdat|time_diff }}7
         </div>
     </div>
 </section>
-<section class="mbr-section" id="pricing-table2-1s" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
-    <div class="mbr-section mbr-section__container mbr-section__container--middle">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12 text-xs-center">
-                  <h3 class="mbr-section-title display-2">{{question.title}}</h3>
-                  <small class="mbr-section-subtitle">{{question.detail}}</small>
-              </div>
-          </div>
-      </div>
-    </div>
-    <div class="mbr-section mbr-section-nopadding mbr-price-table">
-      <div class="row">
-            <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-12 col-xl-6 col-xl-offset-3">
-                <div class="mbr-plan card text-xs-center">
-                    <div class="mbr-plan-body card-block">
-                      <div class="mbr-plan-list">
-                          <ul class="list-group list-group-flush">
-                              {% for option in question.options %}
-                                  <li class="list-group-item">
-                                    {% if option.iscorrect == true %}<span class="label label-success">Correcta</span>
-                                    {% endif %}
-                                     {{option.detail}}
-                                  </li>
-                              {% endfor %}
-                          </ul>
-                      </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-    </div>
-</section>
 <section class="mbr-section" id="pricing-table2-1v" style="background-color: rgb(255, 255, 255); padding-top: 20px; padding-bottom: 0px;">
     <div class="mbr-section mbr-section__container mbr-section__container--middle">
       <div class="container">
@@ -85,53 +52,44 @@ La sección esta activida <b>{{ session.createdat|time_diff }}7
     </div>
     <div class="mbr-section mbr-section-nopadding mbr-price-table">
       <div class="row">
-
-
+            <div class="col-xs-12 col-md-6 col-xl-3"></div>
             <div class="col-xs-12 col-md-6 col-xl-6">
                 <div class="mbr-plan card text-xs-center">
                     <div class="mbr-plan-header card-block">
-
                       <div class="card-title">
-                        <h3 class="mbr-plan-title">Detalle de la Pregunta</h3>
+                        <h3 class="mbr-plan-title">Pregunta: {{question.title}}</h3>
                         <small class="mbr-plan-subtitle"></small>
                       </div>
                       <div class="card-text">
-                          <div class="mbr-price">
-                            <span class="mbr-price-value">$</span>
-                            <span class="mbr-price-figure">0</span><small class="mbr-price-term">/mo.</small>
-                          </div>
-                          <small class="mbr-plan-price-desc">More details</small>
+                          <small class="mbr-plan-price-desc">{{question.detail}}</small>
                       </div>
                     </div>
                     <div class="mbr-plan-body card-block">
-                      <div class="mbr-plan-list"><ul class="list-group list-group-flush"><li class="list-group-item">32 GB storage</li><li class="list-group-item">Unlimited users</li><li class="list-group-item">15 GB bandwidth</li></ul></div>
+                      <div class="mbr-plan-list">
+                          <ul class="list-group list-group-flush">
+                          {% for option in question.options %}
+                              {% set count = 0 %}
+                              {% for ans in results %}
+                                {% if ans.optionid == option.id %}
+                                  {% set count = count + 1%}
+                                {% endif %}
+                              {% endfor %}
 
+                              <li class="list-group-item">
+                                {% if option.iscorrect == true %}<span class="label label-success">Correcta</span>
+                                {% endif %}
+                                 {{option.detail}}
+                                 {% if count != 0 %} | {{count}}
+                                 {% endif %}
+                              </li>
+
+                          {% endfor %}
+                          </ul>
+                      </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-6 col-xl-6">
-                <div class="mbr-plan card text-xs-center">
-                    <div class="mbr-plan-header card-block">
-
-                      <div class="card-title">
-                        <h3 class="mbr-plan-title">Resultados</h3>
-                        <small class="mbr-plan-subtitle"></small>
-                      </div>
-                      <div class="card-text">
-                          <div class="mbr-price">
-                            <span class="mbr-price-value">$</span>
-                            <span class="mbr-price-figure">0</span><small class="mbr-price-term">/mo.</small>
-                          </div>
-                          <small class="mbr-plan-price-desc">More details</small>
-                      </div>
-                    </div>
-                    <div class="mbr-plan-body card-block">
-                      <div class="mbr-plan-list"><ul class="list-group list-group-flush"><li class="list-group-item">Pregunta 1&nbsp;</li><li class="list-group-item">Pregunta 2</li><li class="list-group-item">Pregunta 3</li></ul></div>
-
-                    </div>
-                </div>
-            </div>
-          </div>
+            <div class="col-xs-12 col-md-6 col-xl-3"></div>
     </div>
 </section>
 {% endblock %}

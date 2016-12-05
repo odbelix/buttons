@@ -11,6 +11,7 @@ use CoreBundle\Entity\Question;
 use CoreBundle\Entity\Option;
 use CoreBundle\Entity\ClassroomQuestion;
 use CoreBundle\Entity\Classroom;
+use CoreBundle\Entity\ResultUser;
 use CoreBundle\Form\SessionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use CoreBundle\Form\QuestionType;
@@ -34,7 +35,7 @@ class ActiveSessionController extends Controller
         $classroom = $em->getRepository('CoreBundle:Classroom')->findOneBy(array('id' => $session->getClassroomId()));
 
         $questiontypes = $em->getRepository('CoreBundle:QuestionType')->findBy(array('available' => true));
-        $question = $em->getRepository('CoreBundle:Question')->findOneBy(array('available' => true));
+        $question = $em->getRepository('CoreBundle:Question')->findOneBy(array('available' => true,'session_id' => $session->getId()));
         $questions = $em->getRepository('CoreBundle:Question')->findBy(array('session_id' => $session->getId(),'available' => false));
 
         $sessionform = $this->createSessionFinishForm($session);
@@ -52,7 +53,8 @@ class ActiveSessionController extends Controller
              $em->flush();
 
              //REDIRECT TO RESUMEN
-             return $this->redirectToRoute('session_summary', array('id' => $session->getId()));
+             //return $this->redirectToRoute('session_summary', array('id' => $session->getId()));
+             return $this->redirectToRoute('classroom_home',array('id' => $classroom->getId()));
         }
 
         return $this->render('active/home.html.twig', array(
@@ -90,6 +92,7 @@ class ActiveSessionController extends Controller
     {     $logger = $this->get('logger');
           $em = $this->getDoctrine()->getManager();
           $questiontype = $em->getRepository('CoreBundle:QuestionType')->findOneBy(array('id' => $question->getQuestionTypeId()));
+          $results      = $em->getRepository('CoreBundle:ResultUser')->findAll(array('question_id' => $question->getId()));
 
           $questionform = $this->createFormBuilder()
               ->setAction($this->generateUrl('active_question',
@@ -127,6 +130,7 @@ class ActiveSessionController extends Controller
 
           return $this->render('active/question_active.html.twig', array(
               'session' => $session,
+              'results' => $results,
               'question' => $question,
               'classroom' => $classroom,
               'questiontype' => $questiontype,
@@ -182,8 +186,8 @@ class ActiveSessionController extends Controller
           $questiontype = $em->getRepository('CoreBundle:QuestionType')->findOneBy(array('id' => $type));
 
           $question = new Question();
-          $question->setQuestionType($questiontype);
-          $question->setSession($session);
+          $question->setQuestionTypeId($questiontype->getId());
+          $question->setSessionId($session->getId());
 
           //CHECK QuestionType
           if ($questiontype->getMultiplechoice() == true ) {

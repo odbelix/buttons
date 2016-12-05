@@ -45,11 +45,11 @@ class ActivityQuestion
      */
     protected $activity;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="activityQuestions")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=false)
-     */
-    protected $question;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity="Question", inversedBy="activityQuestions")
+    //  * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=false)
+    //  */
+    // protected $question;
 
     public function __construct()
     {

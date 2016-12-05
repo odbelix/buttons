@@ -97,10 +97,13 @@ class ClassroomController extends Controller
      */
     public function homeAction(Request $request,Classroom $classroom)
     {
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
+
         $this->validateUserClassroom($classroom);
 
-        $session = $em->getRepository('CoreBundle:Session')->findOneBy(array('finished_at' => null));
+        $session = $em->getRepository('CoreBundle:Session')->findOneBy(array('finished_at' => null, 'classroom_id' => $classroom->getId()));
+
         $sessions = $em->getRepository('CoreBundle:Session')->findBy(array('classroom_id' => $classroom->getId()));
 
         $activities = array();

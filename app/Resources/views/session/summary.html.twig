@@ -1,6 +1,17 @@
-{% extends 'CoreBundle:Default:base.html.twig' %}
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
 
-{% block content %}
+{% block title %}Botonera: {{classroom.name}}{% endblock %}
+
+{% block section_title %} {{classroom.name}} {% endblock %}
+{% block section_subtitle %} {{classroom.code}} {% endblock %}
+{% block section_action %}
+La sección esta activida <b>{{ session.createdat|time_diff }}7
+<a href="{{path('active_index',{'id':session.id})}}" >Volver a la Sesión</a>
+{% endblock %}
+
+{% block section_content %}
+
+
     <h1>Clase # {{classroom}}</h1>
     <h3>{{classroom.code}} : {{classroom.name}}</h3>
     <hr>
