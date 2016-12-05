@@ -35,7 +35,6 @@ class QuestionController extends Controller
     {
           $jsonResponse = new JsonResponse();
           $em = $this->getDoctrine()->getManager();
-          $et = $this->getDoctrine()->getEntityManager();
           $classroom = $em->getRepository('CoreBundle:Classroom')->findOneBy(array('code' => $code));
           if ($classroom) {
             $session   = $em->getRepository('CoreBundle:Session')->findOneBy(array('classroom_id' => $classroom->getId(),'finished_at' =>  null));
