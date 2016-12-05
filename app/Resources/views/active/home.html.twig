@@ -1,0 +1,104 @@
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
+
+{% block title %}Botonera: {{classroom.name}}{% endblock %}
+
+{% block section_title %} {{classroom.name}} {% endblock %}
+{% block section_subtitle %} {{classroom.code}} {% endblock %}
+{% block section_action %}
+La sección esta activida <b>{{ session.createdat|time_diff }}
+{{ form_start(sessionform) }}
+  <input class="btn btn-danger" type="submit" value="Terminar sesión">
+{{ form_end(sessionform) }}
+{% endblock %}
+
+{% block section_content %}
+{% if question %}
+<section class="mbr-info mbr-info-extra mbr-section mbr-section-md-padding" id="msg-box1-1l" style="background-color: rgb(255, 255, 255); padding-top: 90px; padding-bottom: 90px;">
+    <div class="container">
+        <div class="row">
+            <div class="mbr-table-md-up">
+                <div class="mbr-table-cell col-md-4">
+                    <div class="text-xs-center"><a class="btn btn-success" href="{{path('active_question',{'id':question.id,'session':session.id,'classroom':classroom.id})}}">Revisar</a></div>
+                </div>
+                <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center">
+                    <h2 class="mbr-info-subtitle mbr-section-subtitle">Una pregunta activa, es un recurso disponibles para los estudiantes. Solo puede existir una pregunta Activa a la vez.</h2>
+                    <h3 class="mbr-info-title mbr-section-title display-2">Tienes una pregunta Activa</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="mbr-cards mbr-section mbr-section-nopadding" id="features4-1m" style="background-color: rgb(255, 255, 255);">
+    <div class="mbr-section mbr-section__container mbr-section__container--middle">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 text-xs-center">
+                  <h3 class="mbr-section-title display-2">Crea una pregunta aquí</h3>
+                  <small class="mbr-section-subtitle">Al crear una pregunta automaticamente estara disponibles para que los Estudiantes puedan desarrollar la actividad</small>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="mbr-cards-row row">
+        {% for question in questiontypes %}
+        <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+            <div class="container">
+                <div class="card cart-block">
+                    <div class="card-block">
+                        <h4 class="card-title">{{question.name}}</h4>
+                        <h5 class="card-subtitle">{{question.explanation}}</h5>
+                        <div class="card-btn"><a href="{{path('active_question_new',{'type':question.id,'session':session.id})}}" class="btn btn-success">Crear</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{# LIST OF CLOSED Questions#}
+<section class="mbr-section" id="pricing-table2-1n" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
+    <div class="mbr-section mbr-section__container mbr-section__container--middle">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 text-xs-center">
+                  <h3 class="mbr-section-title display-2">Actividades en esta sesión</h3>
+                  <small class="mbr-section-subtitle">A continuación puede ver todas las preguntas que se realizaron durante esta sesión</small>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="mbr-section mbr-section-nopadding mbr-price-table">
+      <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-12 col-xl-6 col-xl-offset-3">
+                <div class="mbr-plan card text-xs-center">
+                    <div class="mbr-plan-header card-block">
+                      <div class="card-title">
+                        <h3 class="mbr-plan-title">Preguntas terminadas en esta sesión</h3>
+                        <small class="mbr-plan-subtitle">Corresponde a todas las preguntas que ya fueron cerradas por el Docente.</small>
+                      </div>
+                      <div class="card-text">
+                          <div class="mbr-price">
+                            <span class="mbr-price-figure">{{questions|length}}</span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="mbr-plan-body card-block">
+                      <div class="mbr-plan-list">
+                      <ul class="list-group list-group-flush">
+                          {% if questions %}
+                            {% for question in questions %}
+                              <li class="list-group-item">{{question.title}} <a href="{{path('active_question',{'id':question.id,'session':session.id,'classroom':classroom.id})}}">Ver Detalle</a></li>
+                            {% endfor %}
+                          {% endif %}
+                      </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</section>
+
+{% endblock %}

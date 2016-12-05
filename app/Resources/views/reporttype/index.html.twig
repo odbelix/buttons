@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ReportType list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Available</th>
+                <th>Name</th>
+                <th>Explanation</th>
+                <th>Daily</th>
+                <th>Weekly</th>
+                <th>Monthly</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reportType in reportTypes %}
+            <tr>
+                <td><a href="{{ path('config_reporttype_show', { 'id': reportType.id }) }}">{{ reportType.id }}</a></td>
+                <td>{% if reportType.available %}Yes{% else %}No{% endif %}</td>
+                <td>{{ reportType.name }}</td>
+                <td>{{ reportType.explanation }}</td>
+                <td>{% if reportType.daily %}Yes{% else %}No{% endif %}</td>
+                <td>{% if reportType.weekly %}Yes{% else %}No{% endif %}</td>
+                <td>{% if reportType.monthly %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('config_reporttype_show', { 'id': reportType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('config_reporttype_edit', { 'id': reportType.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_reporttype_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

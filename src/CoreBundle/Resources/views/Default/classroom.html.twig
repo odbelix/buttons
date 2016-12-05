@@ -1,0 +1,13 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+{% block content %}
+  <div class="mbr-cards-row row">
+        <ul>
+          <li><a href="#">Estudiantes</a></li>
+          <li><a href="#">Gruposdd</a></li>
+          <li><a href="{{path('classroom_sessions',{id:classroom.id})}}">Sesiones</a></li>
+        </ul>
+  </div>
+  <hr>
+  </div>
+{# FOR SESSIONS #}
+{% endblock %}

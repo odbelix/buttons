@@ -1,0 +1,58 @@
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
+
+{% block title %}Botonera: {{classroom.name}}{% endblock %}
+
+{% block section_title %} {{classroom.name}} {% endblock %}
+{% block section_subtitle %} {{classroom.code}} {% endblock %}
+{% block section_action %}
+La sección esta activida <b>{{ session.createdat|time_diff }}7
+<a href="{{path('active_index',{'id':session.id})}}" >Volver a la Sesión</a>
+{% endblock %}
+
+{% block section_content %}
+
+
+    <h1>Clase # {{classroom}}</h1>
+    <h3>{{classroom.code}} : {{classroom.name}}</h3>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastchange</th>
+                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h1>Session</h1>
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ session.id }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if session.createdat %}{{ session.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Finished_at</th>
+                <td>{% if session.finishedat %}{{ session.finishedat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Classroom_id</th>
+                <td>{{ session.classroomid }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    {% if questions %}
+        {% for question in questions %}
+            <a href="">{{question.title}}</a><br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

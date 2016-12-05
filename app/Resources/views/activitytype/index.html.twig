@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ActivityType list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Available</th>
+                <th>Name</th>
+                <th>Explanation</th>
+                <th>Race</th>
+                <th>Quiz</th>
+                <th>Poll</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for activityType in activityTypes %}
+            <tr>
+                <td><a href="{{ path('config_activitytype_show', { 'id': activityType.id }) }}">{{ activityType.id }}</a></td>
+                <td>{% if activityType.available %}Yes{% else %}No{% endif %}</td>
+                <td>{{ activityType.name }}</td>
+                <td>{{ activityType.explanation }}</td>
+                <td>{% if activityType.race %}Yes{% else %}No{% endif %}</td>
+                <td>{% if activityType.quiz %}Yes{% else %}No{% endif %}</td>
+                <td>{% if activityType.poll %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('config_activitytype_show', { 'id': activityType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('config_activitytype_edit', { 'id': activityType.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_activitytype_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

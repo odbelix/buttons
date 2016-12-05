@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v3.9.0, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{{asset('assets/images/logo.png')}}" type="image/x-icon">
+  <meta name="description" content="Home del proyecto">
+  <title>{% block title %}{% include 'CoreBundle:Default:name.html.twig' %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+  <link rel="stylesheet" href="{{asset('assets/bootstrap-material-design-font/css/material.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/et-line-font-plugin/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/tether/tether.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/animate.css/animate.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/dropdown/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/theme/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/mobirise/css/mbr-additional.css')}}" type="text/css">
+  {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<section id="ext_menu-8">
+    <nav class="navbar navbar-dropdown">
+        <div class="container">
+            <div class="mbr-table">
+                <div class="mbr-table-cell">
+                    <div class="navbar-brand">
+                        <a href="" class="navbar-logo"><img src="{{asset('assets/images/logo1.png')}}" alt="Mobirise"></a>
+                        <a class="navbar-caption" href="">{% include 'CoreBundle:Default:name.html.twig' %}</a>
+                    </div>
+                </div>
+                <div class="mbr-table-cell">
+                    <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                        <div class="hamburger-icon"></div>
+                    </button>
+                    {% include "CoreBundle:Default:menu.html.twig" %}
+                    <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                        <div class="close-icon"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</section>
+{% block content %}
+{% endblock %}
+  <script src="{{asset('assets/web/assets/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/tether/tether.min.js')}}"></script>
+  <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('assets/smooth-scroll/SmoothScroll.js')}}"></script>
+  <script src="{{asset('assets/viewportChecker/jquery.viewportchecker.js')}}"></script>
+  <script src="{{asset('assets/dropdown/js/script.min.js')}}"></script>
+  <script src="{{asset('assets/touchSwipe/jquery.touchSwipe.min.js')}}"></script>
+  <script src="{{asset('assets/theme/js/script.js')}}"></script>
+  {% block javascripts %}{% endblock %}
+  <input name="animation" type="hidden">
+   <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"><i class="mbr-arrow-up-icon"></i></a></div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'CoreBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <h1>Clase # {{classroom}}</h1>
+    <h3>{{classroom.code}} : {{classroom.name}}</h3>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created_at</th>
+                <td>{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastchange</th>
+                <td>{% if classroom.lastchange %}{{ classroom.lastchange|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h1>Sessions</h1>
+    <table>
+        <thead>
+          <tr>
+              <th>#</th>
+              <th>Fecha de Sesión</th>
+              <th>Fecha de Termino</th>
+              <th>Número de Preguntas</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if sessions %}
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.id }}</td>
+                    <td>{% if session.createdat %}{{ session.createdat|date('Y-m-d') }}{% endif %}</td>
+                    <td>{% if session.finishedat %}{{ session.finishedat|date('Y-m-d') }}{% endif %}</td>
+                    <td>{{ session.questions|length }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <hr>
+{% endblock %}

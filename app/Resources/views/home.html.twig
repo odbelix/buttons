@@ -1,0 +1,41 @@
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
+
+{% block title %}Botonera:Home{% endblock %}
+
+{% block section_title %} Gestiona tus Salas {% endblock %}
+{% block section_subtitle %} Cada módulo que imparte un Docente se traduce en una Sala en esta plataforma. Dentro de una Salas
+puedes gestionar los estudiantes y las sesiones.{% endblock %}
+{% block section_action %}<a class="btn btn-secondary"  href="{{path('classroom_index')}}">Mis Salas</a>{% endblock %}
+
+{% block section_content %}
+<section class="mbr-cards mbr-section mbr-section-nopadding" id="features4-d" style="background-color: rgb(255, 255, 255);">
+{% if classrooms %}
+    {% if classrooms|length > 0 %}
+        {% set count = 1 %}
+        {% for classroom in classrooms %}
+            {% if count == 1 %}
+              <div class="mbr-cards-row row">
+            {% endif %}
+            <div class="mbr-cards-col col-xs-12 col-lg-4" style="padding-top: 40px; padding-bottom: 120px;">
+                <div class="container">
+                    <div class="card cart-block">
+                        <div class="card-block">
+                            <h4 class="card-title">{{classroom.name}}</h4>
+                            <h5 class="card-subtitle">{{classroom.code}}</h5>
+                            <div class="card-btn"><a href="{{path('classroom_home',{'id':classroom.id})}}" class="btn btn-success">Ingresar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if count == 3 %}
+                </div>
+                {% set count = 1 %}
+            {% else %}
+                {% set count = count + 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div>
+{% endif %}
+</section>
+{% endblock %}

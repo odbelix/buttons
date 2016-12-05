@@ -1,0 +1,47 @@
+{% extends 'CoreBundle:Default:base_extend.html.twig' %}
+
+{% block title %}Botonera: Mis Salas{% endblock %}
+
+{% block section_title %} Mis Salas {% endblock %}
+{% block section_subtitle %}Aquí puedes Crear, Editar y Eliminar tus Salas. Atención que si quieres eliminar una sala, eliminas con esta acción toda la información asociada a ella.{% endblock %}
+{% block section_action %}<a class="btn btn-secondary" href="{{ path('classroom_new') }}">Nueva Sala</a>{% endblock %}
+
+{% block section_content %}
+<section class="mbr-section" id="pricing-table2-1b" style="background-color: rgb(255, 255, 255); padding-top: 0px; padding-bottom: 0px;">
+    <div class="mbr-section mbr-section-nopadding mbr-price-table">
+      <div class="row">
+            <div class="col-xs-12  col-md-6 col-xl-3">
+            </div>
+            <div class="col-xs-12  col-md-6 col-xl-6">
+                <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Fecha de creación</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for classroom in classrooms %}
+                        <tr>
+                            <td>{{ classroom.code }}</td>
+                            <td>{{ classroom.name }}</td>
+                            <td class="text-center">{% if classroom.createdat %}{{ classroom.createdat|date('Y-m-d') }}{% endif %}</td>
+                            <td>
+                                <a class="btn btn-xs btn-success" href="{{ path('classroom_show', { 'id': classroom.id }) }}" >Ver</a>
+                                <a class="btn btn-xs btn-success" href="{{ path('classroom_edit', { 'id': classroom.id }) }}" >Editar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="col-xs-12  col-md-6 col-xl-3">
+            </div>
+        </div>
+      </div>
+</section>
+{% endblock %}

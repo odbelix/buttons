@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>QuestionType list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Available</th>
+                <th>Name</th>
+                <th>Explanation</th>
+                <th>Boolean</th>
+                <th>Externalsource</th>
+                <th>Multiplechoice</th>
+                <th>Oneoption</th>
+                <th>Shortanswer</th>
+                <th>Created_at</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for questionType in questionTypes %}
+            <tr>
+                <td><a href="{{ path('config_questiontype_show', { 'id': questionType.id }) }}">{{ questionType.id }}</a></td>
+                <td>{% if questionType.available %}Yes{% else %}No{% endif %}</td>
+                <td>{% if questionType.boolean %}Yes{% else %}No{% endif %}</td>
+                <td>{{ questionType.explanation }}</td>
+                <td>{% if questionType.externalsource %}Yes{% else %}No{% endif %}</td>
+                <td>{{ questionType.name }}</td>
+                <td>{% if questionType.multiplechoice %}Yes{% else %}No{% endif %}</td>
+                <td>{% if questionType.oneoption %}Yes{% else %}No{% endif %}</td>
+                <td>{% if questionType.shortanswer %}Yes{% else %}No{% endif %}</td>
+                <td>{% if questionType.createdat %}{{ questionType.createdat|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('config_questiontype_show', { 'id': questionType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('config_questiontype_edit', { 'id': questionType.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('config_questiontype_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
